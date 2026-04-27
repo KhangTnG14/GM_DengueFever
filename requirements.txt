@@ -1,0 +1,12 @@
+networkx==3.3
+geopandas==0.14.4
+folium==0.16.0
+pyvis==0.3.2
+python-louvain==0.16
+pandas==2.2.2
+numpy==1.26.4
+matplotlib==3.8.4
+scikit-learn==1.4.2
+scipy==1.13.0
+shapely==2.0.4
+fiona==1.9.6
