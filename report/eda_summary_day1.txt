@@ -1,0 +1,40 @@
+EDA SUMMARY - DAY 1 (Member C)
+
+Dữ liệu sử dụng cho EDA: 2022-2024.
+Nguồn dân số/diện tích/mật độ: Tổng cục Thống kê, Niên giám thống kê TP.HCM 2023 (tổng hợp vào data/raw/population.csv).
+Tổng số dòng dữ liệu: 3432; tổng số ca toàn bộ giai đoạn: 297402.
+
+1) Phân bố theo quận/huyện (tổng ca 2022-2024) - Top 10:
+- Thủ Đức: 43377 ca
+- Bình Chánh: 34132 ca
+- Bình Tân: 28018 ca
+- Gò Vấp: 21276 ca
+- Quận 12: 19857 ca
+- Hóc Môn: 19777 ca
+- Củ Chi: 17547 ca
+- Bình Thạnh: 15153 ca
+- Tân Bình: 14794 ca
+- Tân Phú: 14336 ca
+
+2) Mùa vụ: tháng cao nhất toàn giai đoạn là tháng 7 với 35167 ca.
+Mùa vụ theo từng năm:
+- Năm 2022: tháng 7 cao nhất (10143 ca)
+- Năm 2023: tháng 7 cao nhất (13381 ca)
+- Năm 2024: tháng 7 cao nhất (11643 ca)
+
+3) Tỉ lệ mắc bệnh per 100.000 dân theo quận theo năm - 5 mức cao nhất:
+- 2023 | Bình Chánh: 1856.25 ca/100.000
+- 2024 | Bình Chánh: 1576.31 ca/100.000
+- 2023 | Cần Giờ: 1514.13 ca/100.000
+- 2023 | Củ Chi: 1477.34 ca/100.000
+- 2023 | Nhà Bè: 1461.54 ca/100.000
+
+4) Correlation (trên dữ liệu tuần/tháng):
+- cases vs population: 0.897
+- cases vs density: -0.512
+- cases_per_100k vs density: -0.175
+
+Nhận xét sơ bộ:
+- Số ca có xu hướng tăng rõ vào mùa mưa (nhóm tháng 7-10).
+- Các khu vực dân đông người thường có tổng ca cao, nhưng mật độ dân số không phải yếu tố đơn lẻ giải thích toàn bộ biến động.
+- Cần bổ sung dữ liệu 2020-2021 để đánh giá xu hướng dài hạn đúng theo kế hoạch 2020-2024.
