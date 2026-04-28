@@ -1,0 +1,55 @@
+﻿source,target,weight
+BìnhChánh,BìnhTân,1.0
+BìnhChánh,HócMôn,1.0
+BìnhChánh,NhàBè,1.0
+BìnhChánh,Quận7,1.0
+BìnhChánh,Quận8,1.0
+BìnhTân,HócMôn,1.0
+BìnhTân,Quận12,1.0
+BìnhTân,Quận6,1.0
+BìnhTân,Quận8,1.0
+BìnhTân,TânPhú,1.0
+BìnhThạnh,GòVấp,1.0
+BìnhThạnh,PhúNhuận,1.0
+BìnhThạnh,Quận1,1.0
+BìnhThạnh,Quận12,1.0
+BìnhThạnh,Thủ Đức,1.0
+CầnGiờ,NhàBè,1.0
+CủChi,HócMôn,1.0
+GòVấp,PhúNhuận,1.0
+GòVấp,Quận12,1.0
+GòVấp,TânBình,1.0
+HócMôn,Quận12,1.0
+NhàBè,Quận7,1.0
+PhúNhuận,Quận1,1.0
+PhúNhuận,Quận3,1.0
+PhúNhuận,TânBình,1.0
+Quận1,Quận10,1.0
+Quận1,Quận3,1.0
+Quận1,Quận4,1.0
+Quận1,Quận5,1.0
+Quận1,Thủ Đức,1.0
+Quận10,Quận11,1.0
+Quận10,Quận3,1.0
+Quận10,Quận5,1.0
+Quận10,TânBình,1.0
+Quận11,Quận5,1.0
+Quận11,Quận6,1.0
+Quận11,TânBình,1.0
+Quận11,TânPhú,1.0
+Quận12,TânBình,1.0
+Quận12,TânPhú,1.0
+Quận12,Thủ Đức,1.0
+Quận3,Quận5,1.0
+Quận3,TânBình,1.0
+Quận4,Quận5,1.0
+Quận4,Quận7,1.0
+Quận4,Quận8,1.0
+Quận4,Thủ Đức,1.0
+Quận5,Quận6,1.0
+Quận5,Quận8,1.0
+Quận6,Quận8,1.0
+Quận6,TânPhú,1.0
+Quận7,Quận8,1.0
+Quận7,Thủ Đức,1.0
+TânBình,TânPhú,1.0
