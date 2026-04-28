@@ -22,3 +22,7 @@ Cách chạy Day 1 (B):
 - python src/data/merge_filter_HCM.py
 - python src/graph/build_adjacency.py
 - python src/graph/build_traffic.py
+
+Cách chạy Day 2 (B):
+
+- python src/graph/graph_analysis.py
