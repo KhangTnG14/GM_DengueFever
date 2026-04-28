@@ -1,6 +1,6 @@
 KẾT QUẢ XUẤT RA
 
-- maps/ hcmc_dengue_choropleth.html · cluster_map.html
+- maps/ draft_choropleth.html · hcmc_dengue_choropleth.html
 
 - graphs/ - dengue_network.html (Pyvis) · gephi_export.gexf
 
