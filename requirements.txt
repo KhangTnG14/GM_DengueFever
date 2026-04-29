@@ -11,3 +11,4 @@ scipy==1.13.0
 shapely==2.0.4
 fiona==1.9.6
 seaborn==0.13.2
+
