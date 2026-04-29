@@ -1,0 +1,12 @@
+﻿metric_group,metric_name,value,note
+community_validation,louvain_within_community_corr_mean,0.7625157873026026,Mean Pearson correlation of weekly cases for district pairs in same community/cluster
+community_validation,louvain_across_community_corr_mean,0.7577965625413797,Mean Pearson correlation of weekly cases for district pairs in different community/cluster
+community_validation,louvain_correlation_lift_within_minus_across,0.004719224761222884,Positive value means discovered community aligns with synchronized outbreak timing
+community_validation,spectral_within_community_corr_mean,0.7468741147533364,Mean Pearson correlation of weekly cases for district pairs in same community/cluster
+community_validation,spectral_across_community_corr_mean,0.7702136987578817,Mean Pearson correlation of weekly cases for district pairs in different community/cluster
+community_validation,spectral_correlation_lift_within_minus_across,-0.023339584004545277,Positive value means discovered community aligns with synchronized outbreak timing
+centrality_vs_cases,spearman_betweenness_vs_total_cases,-0.27213631855591114,Rank correlation between structural bridge role and observed cumulative dengue burden
+centrality_vs_cases,top_betweenness_district,Quận1,"Betweenness=0.2238, TotalCases=4393"
+centrality_vs_cases,top_total_cases_district,Thủ Đức,"TotalCases=43377, Betweenness=0.0000"
+clustering_quality,louvain_best_modularity_q,0.3218449931412894,Best at resolution=1.5
+clustering_quality,spectral_best_silhouette,-0.0099396955798892,Best at k=3
