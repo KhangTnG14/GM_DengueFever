@@ -25,4 +25,7 @@ Cách chạy Day 1 (B):
 
 Cách chạy Day 2 (B):
 
-- python src/graph/graph_analysis.py
+- Chỉ cần chạy file notebook: 03_centrality_analysis.ipynb
+  Cách chạy Day 3 (B):
+
+- Chỉ cần chạy file notebook: 06_sir_epidemic_model.ipynb
