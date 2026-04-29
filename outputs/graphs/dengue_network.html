@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #1a1a2e;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+<div style="position:fixed;top:15px;left:15px;background:#1a1a2e;
+            border:1px solid #444;border-radius:8px;padding:12px;
+            font-family:Arial,sans-serif;font-size:13px;color:#eaeaea;z-index:9999;">
+  <b>O Dich Louvain</b><br>
+  <span style="color:#E63946">&#9679;</span> Cum 0 &nbsp;
+  <span style="color:#F4A261">&#9679;</span> Cum 1 &nbsp;
+  <span style="color:#2A9D8F">&#9679;</span> Cum 2<br>
+  <span style="color:#457B9D">&#9679;</span> Cum 3 &nbsp;
+  <span style="color:#A8DADC">&#9679;</span> Cum 4<br><br>
+  <b>Kich thuoc node</b><br>
+  Ti le voi tong ca benh<br><br>
+  <b>Canh</b><br>
+  Dia ly ke nhau (weight=1)
+</div>
+
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 2, "borderWidthSelected": 4, "color": "#A8DADC", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn1", "label": "Qu\u1eadn1", "shape": "dot", "size": 22.288675055514435, "title": "Qu\u1eadn1\nTong ca (2022-2024): 4,393\nBetweenness: 0.2238\nPageRank:    0.0759\nO dich (Louvain): Cum 4"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#E63946", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn4", "label": "Qu\u1eadn4", "shape": "dot", "size": 23.191709844559586, "title": "Qu\u1eadn4\nTong ca (2022-2024): 5,003\nBetweenness: 0.2143\nPageRank:    0.0505\nO dich (Louvain): Cum 0"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#E63946", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn7", "label": "Qu\u1eadn7", "shape": "dot", "size": 30.95632864544782, "title": "Qu\u1eadn7\nTong ca (2022-2024): 10,248\nBetweenness: 0.1619\nPageRank:    0.0390\nO dich (Louvain): Cum 0"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#2A9D8F", "font": {"color": "#eaeaea"}, "id": "Ph\u00faNhu\u1eadn", "label": "Ph\u00faNhu\u1eadn", "shape": "dot", "size": 20.609918578830495, "title": "Ph\u00faNhu\u1eadn\nTong ca (2022-2024): 3,259\nBetweenness: 0.1524\nPageRank:    0.0543\nO dich (Louvain): Cum 2"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#2A9D8F", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn12", "label": "Qu\u1eadn12", "shape": "dot", "size": 45.18134715025907, "title": "Qu\u1eadn12\nTong ca (2022-2024): 19,857\nBetweenness: 0.1429\nPageRank:    0.0467\nO dich (Louvain): Cum 2"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#2A9D8F", "font": {"color": "#eaeaea"}, "id": "T\u00e2nB\u00ecnh", "label": "T\u00e2nB\u00ecnh", "shape": "dot", "size": 37.68615840118431, "title": "T\u00e2nB\u00ecnh\nTong ca (2022-2024): 14,794\nBetweenness: 0.1286\nPageRank:    0.0611\nO dich (Louvain): Cum 2"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#A8DADC", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn5", "label": "Qu\u1eadn5", "shape": "dot", "size": 21.850481125092525, "title": "Qu\u1eadn5\nTong ca (2022-2024): 4,097\nBetweenness: 0.1190\nPageRank:    0.0733\nO dich (Louvain): Cum 4"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#2A9D8F", "font": {"color": "#eaeaea"}, "id": "G\u00f2V\u1ea5p", "label": "G\u00f2V\u1ea5p", "shape": "dot", "size": 47.2820133234641, "title": "G\u00f2V\u1ea5p\nTong ca (2022-2024): 21,276\nBetweenness: 0.1000\nPageRank:    0.0407\nO dich (Louvain): Cum 2"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#457B9D", "font": {"color": "#eaeaea"}, "id": "H\u00f3cM\u00f4n", "label": "H\u00f3cM\u00f4n", "shape": "dot", "size": 45.06291635825315, "title": "H\u00f3cM\u00f4n\nTong ca (2022-2024): 19,777\nBetweenness: 0.0952\nPageRank:    0.0280\nO dich (Louvain): Cum 3"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#E63946", "font": {"color": "#eaeaea"}, "id": "Nh\u00e0B\u00e8", "label": "Nh\u00e0B\u00e8", "shape": "dot", "size": 27.357512953367877, "title": "Nh\u00e0B\u00e8\nTong ca (2022-2024): 7,817\nBetweenness: 0.0952\nPageRank:    0.0250\nO dich (Louvain): Cum 0"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#F4A261", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn11", "label": "Qu\u1eadn11", "shape": "dot", "size": 23.894892672094745, "title": "Qu\u1eadn11\nTong ca (2022-2024): 5,478\nBetweenness: 0.0905\nPageRank:    0.0570\nO dich (Louvain): Cum 1"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#F4A261", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn6", "label": "Qu\u1eadn6", "shape": "dot", "size": 25.33678756476684, "title": "Qu\u1eadn6\nTong ca (2022-2024): 6,452\nBetweenness: 0.0667\nPageRank:    0.0571\nO dich (Louvain): Cum 1"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#A8DADC", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn10", "label": "Qu\u1eadn10", "shape": "dot", "size": 22.68097705403405, "title": "Qu\u1eadn10\nTong ca (2022-2024): 4,658\nBetweenness: 0.0619\nPageRank:    0.0637\nO dich (Louvain): Cum 4"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#F4A261", "font": {"color": "#eaeaea"}, "id": "B\u00ecnhT\u00e2n", "label": "B\u00ecnhT\u00e2n", "shape": "dot", "size": 57.26276831976314, "title": "B\u00ecnhT\u00e2n\nTong ca (2022-2024): 28,018\nBetweenness: 0.0619\nPageRank:    0.0486\nO dich (Louvain): Cum 1"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#A8DADC", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn3", "label": "Qu\u1eadn3", "shape": "dot", "size": 20.59659511472983, "title": "Qu\u1eadn3\nTong ca (2022-2024): 3,250\nBetweenness: 0.0524\nPageRank:    0.0673\nO dich (Louvain): Cum 4"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#F4A261", "font": {"color": "#eaeaea"}, "id": "T\u00e2nPh\u00fa", "label": "T\u00e2nPh\u00fa", "shape": "dot", "size": 37.00814211695041, "title": "T\u00e2nPh\u00fa\nTong ca (2022-2024): 14,336\nBetweenness: 0.0429\nPageRank:    0.0436\nO dich (Louvain): Cum 1"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#E63946", "font": {"color": "#eaeaea"}, "id": "Qu\u1eadn8", "label": "Qu\u1eadn8", "shape": "dot", "size": 33.00666173205033, "title": "Qu\u1eadn8\nTong ca (2022-2024): 11,633\nBetweenness: 0.0238\nPageRank:    0.0505\nO dich (Louvain): Cum 0"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#2A9D8F", "font": {"color": "#eaeaea"}, "id": "B\u00ecnhTh\u1ea1nh", "label": "B\u00ecnhTh\u1ea1nh", "shape": "dot", "size": 38.21761658031088, "title": "B\u00ecnhTh\u1ea1nh\nTong ca (2022-2024): 15,153\nBetweenness: 0.0238\nPageRank:    0.0361\nO dich (Louvain): Cum 2"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#E63946", "font": {"color": "#eaeaea"}, "id": "B\u00ecnhCh\u00e1nh", "label": "B\u00ecnhCh\u00e1nh", "shape": "dot", "size": 66.31384159881569, "title": "B\u00ecnhCh\u00e1nh\nTong ca (2022-2024): 34,132\nBetweenness: 0.0095\nPageRank:    0.0348\nO dich (Louvain): Cum 0"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#457B9D", "font": {"color": "#eaeaea"}, "id": "C\u1ee7Chi", "label": "C\u1ee7Chi", "shape": "dot", "size": 41.76165803108808, "title": "C\u1ee7Chi\nTong ca (2022-2024): 17,547\nBetweenness: 0.0000\nPageRank:    0.0113\nO dich (Louvain): Cum 3"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#E63946", "font": {"color": "#eaeaea"}, "id": "C\u1ea7nGi\u1edd", "label": "C\u1ea7nGi\u1edd", "shape": "dot", "size": 20.0, "title": "C\u1ea7nGi\u1edd\nTong ca (2022-2024): 2,847\nBetweenness: 0.0000\nPageRank:    0.0114\nO dich (Louvain): Cum 0"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#E63946", "font": {"color": "#eaeaea"}, "id": "Th\u1ee7 \u0110\u1ee9c", "label": "Th\u1ee7 \u0110\u1ee9c", "shape": "dot", "size": 80.0, "title": "Th\u1ee7 \u0110\u1ee9c\nTong ca (2022-2024): 43,377\nBetweenness: 0.0000\nPageRank:    0.0241\nO dich (Louvain): Cum 0"}]);
+                  edges = new vis.DataSet([{"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhCh\u00e1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "B\u00ecnhT\u00e2n", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhCh\u00e1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "H\u00f3cM\u00f4n", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhCh\u00e1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Nh\u00e0B\u00e8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhCh\u00e1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn7", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhCh\u00e1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhT\u00e2n", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "H\u00f3cM\u00f4n", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhT\u00e2n", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn12", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhT\u00e2n", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn6", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhT\u00e2n", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhT\u00e2n", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nPh\u00fa", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhTh\u1ea1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "G\u00f2V\u1ea5p", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhTh\u1ea1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Ph\u00faNhu\u1eadn", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhTh\u1ea1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn1", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhTh\u1ea1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn12", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "B\u00ecnhTh\u1ea1nh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Th\u1ee7 \u0110\u1ee9c", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "C\u1ea7nGi\u1edd", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Nh\u00e0B\u00e8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "C\u1ee7Chi", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "H\u00f3cM\u00f4n", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "G\u00f2V\u1ea5p", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Ph\u00faNhu\u1eadn", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "G\u00f2V\u1ea5p", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn12", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "G\u00f2V\u1ea5p", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nB\u00ecnh", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "H\u00f3cM\u00f4n", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn12", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Nh\u00e0B\u00e8", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn7", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Ph\u00faNhu\u1eadn", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn1", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Ph\u00faNhu\u1eadn", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn3", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Ph\u00faNhu\u1eadn", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nB\u00ecnh", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn1", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn10", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn1", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn3", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn1", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn4", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn1", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn5", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn1", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Th\u1ee7 \u0110\u1ee9c", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn10", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn11", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn10", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn3", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn10", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn5", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn10", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nB\u00ecnh", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn11", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn5", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn11", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn6", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn11", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nB\u00ecnh", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn11", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nPh\u00fa", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn12", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nB\u00ecnh", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn12", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nPh\u00fa", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn12", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Th\u1ee7 \u0110\u1ee9c", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn3", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn5", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn3", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nB\u00ecnh", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn4", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn5", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn4", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn7", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn4", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn4", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Th\u1ee7 \u0110\u1ee9c", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn5", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn6", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn5", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn6", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn6", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nPh\u00fa", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn7", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Qu\u1eadn8", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "Qu\u1eadn7", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "Th\u1ee7 \u0110\u1ee9c", "weight": 1.0, "width": 3.0}, {"color": {"color": "#ffffff44", "highlight": "#ffdd57"}, "from": "T\u00e2nB\u00ecnh", "title": "Tr\u1ecdng s\u1ed1: 1.00", "to": "T\u00e2nPh\u00fa", "weight": 1.0, "width": 3.0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"interaction": {"hover": true, "tooltipDelay": 100, "zoomView": true, "dragView": true}, "physics": {"enabled": true, "barnesHut": {"gravitationalConstant": -8000, "centralGravity": 0.3, "springLength": 120, "springConstant": 0.04, "damping": 0.09}, "stabilization": {"iterations": 200}}, "nodes": {"shape": "dot"}, "edges": {"smooth": {"type": "continuous"}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
