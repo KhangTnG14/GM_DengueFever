@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2026-04-29">
+    <creator>NetworkX 3.5</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="node">
+      <attribute id="0" title="total_cases" type="double" />
+      <attribute id="1" title="betweenness" type="double" />
+      <attribute id="2" title="pagerank" type="double" />
+      <attribute id="3" title="degree_centrality" type="double" />
+      <attribute id="4" title="louvain_community" type="long" />
+    </attributes>
+    <nodes>
+      <node id="Quận1" label="Quận1">
+        <attvalues>
+          <attvalue for="0" value="4393.0" />
+          <attvalue for="1" value="0.2238095238095238" />
+          <attvalue for="2" value="0.0759445719719429" />
+          <attvalue for="3" value="0.3333333333333333" />
+          <attvalue for="4" value="4" />
+        </attvalues>
+      </node>
+      <node id="Quận4" label="Quận4">
+        <attvalues>
+          <attvalue for="0" value="5003.0" />
+          <attvalue for="1" value="0.2142857142857143" />
+          <attvalue for="2" value="0.0505260784128171" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="0" />
+        </attvalues>
+      </node>
+      <node id="Quận7" label="Quận7">
+        <attvalues>
+          <attvalue for="0" value="10248.0" />
+          <attvalue for="1" value="0.1619047619047619" />
+          <attvalue for="2" value="0.0390047724541414" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="0" />
+        </attvalues>
+      </node>
+      <node id="PhúNhuận" label="PhúNhuận">
+        <attvalues>
+          <attvalue for="0" value="3259.0" />
+          <attvalue for="1" value="0.1523809523809524" />
+          <attvalue for="2" value="0.0542586542163916" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="2" />
+        </attvalues>
+      </node>
+      <node id="Quận12" label="Quận12">
+        <attvalues>
+          <attvalue for="0" value="19857.0" />
+          <attvalue for="1" value="0.1428571428571428" />
+          <attvalue for="2" value="0.0466600992442668" />
+          <attvalue for="3" value="0.3333333333333333" />
+          <attvalue for="4" value="2" />
+        </attvalues>
+      </node>
+      <node id="TânBình" label="TânBình">
+        <attvalues>
+          <attvalue for="0" value="14794.0" />
+          <attvalue for="1" value="0.1285714285714286" />
+          <attvalue for="2" value="0.0611237383758541" />
+          <attvalue for="3" value="0.3333333333333333" />
+          <attvalue for="4" value="2" />
+        </attvalues>
+      </node>
+      <node id="Quận5" label="Quận5">
+        <attvalues>
+          <attvalue for="0" value="4097.0" />
+          <attvalue for="1" value="0.119047619047619" />
+          <attvalue for="2" value="0.0733195730493583" />
+          <attvalue for="3" value="0.3333333333333333" />
+          <attvalue for="4" value="4" />
+        </attvalues>
+      </node>
+      <node id="GòVấp" label="GòVấp">
+        <attvalues>
+          <attvalue for="0" value="21276.0" />
+          <attvalue for="1" value="0.1" />
+          <attvalue for="2" value="0.0406973812597637" />
+          <attvalue for="3" value="0.1904761904761904" />
+          <attvalue for="4" value="2" />
+        </attvalues>
+      </node>
+      <node id="HócMôn" label="HócMôn">
+        <attvalues>
+          <attvalue for="0" value="19777.0" />
+          <attvalue for="1" value="0.0952380952380952" />
+          <attvalue for="2" value="0.0279532909673982" />
+          <attvalue for="3" value="0.1904761904761904" />
+          <attvalue for="4" value="3" />
+        </attvalues>
+      </node>
+      <node id="NhàBè" label="NhàBè">
+        <attvalues>
+          <attvalue for="0" value="7817.0" />
+          <attvalue for="1" value="0.0952380952380952" />
+          <attvalue for="2" value="0.0250174242069798" />
+          <attvalue for="3" value="0.1428571428571428" />
+          <attvalue for="4" value="0" />
+        </attvalues>
+      </node>
+      <node id="Quận11" label="Quận11">
+        <attvalues>
+          <attvalue for="0" value="5478.0" />
+          <attvalue for="1" value="0.0904761904761904" />
+          <attvalue for="2" value="0.0569510562210881" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="1" />
+        </attvalues>
+      </node>
+      <node id="Quận6" label="Quận6">
+        <attvalues>
+          <attvalue for="0" value="6452.0" />
+          <attvalue for="1" value="0.0666666666666666" />
+          <attvalue for="2" value="0.0570670721114904" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="1" />
+        </attvalues>
+      </node>
+      <node id="Quận10" label="Quận10">
+        <attvalues>
+          <attvalue for="0" value="4658.0" />
+          <attvalue for="1" value="0.0619047619047619" />
+          <attvalue for="2" value="0.0636870443096741" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="4" />
+        </attvalues>
+      </node>
+      <node id="BìnhTân" label="BìnhTân">
+        <attvalues>
+          <attvalue for="0" value="28018.0" />
+          <attvalue for="1" value="0.0619047619047619" />
+          <attvalue for="2" value="0.0486286723180632" />
+          <attvalue for="3" value="0.2857142857142857" />
+          <attvalue for="4" value="1" />
+        </attvalues>
+      </node>
+      <node id="Quận3" label="Quận3">
+        <attvalues>
+          <attvalue for="0" value="3250.0" />
+          <attvalue for="1" value="0.0523809523809523" />
+          <attvalue for="2" value="0.0673365659475826" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="4" />
+        </attvalues>
+      </node>
+      <node id="TânPhú" label="TânPhú">
+        <attvalues>
+          <attvalue for="0" value="14336.0" />
+          <attvalue for="1" value="0.0428571428571428" />
+          <attvalue for="2" value="0.0436185704383845" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="1" />
+        </attvalues>
+      </node>
+      <node id="Quận8" label="Quận8">
+        <attvalues>
+          <attvalue for="0" value="11633.0" />
+          <attvalue for="1" value="0.0238095238095238" />
+          <attvalue for="2" value="0.0504881914517872" />
+          <attvalue for="3" value="0.2857142857142857" />
+          <attvalue for="4" value="0" />
+        </attvalues>
+      </node>
+      <node id="BìnhThạnh" label="BìnhThạnh">
+        <attvalues>
+          <attvalue for="0" value="15153.0" />
+          <attvalue for="1" value="0.0238095238095238" />
+          <attvalue for="2" value="0.0361374463885297" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="2" />
+        </attvalues>
+      </node>
+      <node id="BìnhChánh" label="BìnhChánh">
+        <attvalues>
+          <attvalue for="0" value="34132.0" />
+          <attvalue for="1" value="0.0095238095238095" />
+          <attvalue for="2" value="0.0347591321481895" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="0" />
+        </attvalues>
+      </node>
+      <node id="CủChi" label="CủChi">
+        <attvalues>
+          <attvalue for="0" value="17547.0" />
+          <attvalue for="1" value="0.0" />
+          <attvalue for="2" value="0.0113225702897416" />
+          <attvalue for="3" value="0.0476190476190476" />
+          <attvalue for="4" value="3" />
+        </attvalues>
+      </node>
+      <node id="CầnGiờ" label="CầnGiờ">
+        <attvalues>
+          <attvalue for="0" value="2847.0" />
+          <attvalue for="1" value="0.0" />
+          <attvalue for="2" value="0.0114125420397511" />
+          <attvalue for="3" value="0.0476190476190476" />
+          <attvalue for="4" value="0" />
+        </attvalues>
+      </node>
+      <node id="Thủ Đức" label="Thủ Đức">
+        <attvalues>
+          <attvalue for="0" value="43377.0" />
+          <attvalue for="1" value="0.0" />
+          <attvalue for="2" value="0.0240855521768036" />
+          <attvalue for="3" value="0.238095238095238" />
+          <attvalue for="4" value="0" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="Quận1" target="BìnhThạnh" id="0" weight="1.0" />
+      <edge source="Quận1" target="PhúNhuận" id="1" weight="1.0" />
+      <edge source="Quận1" target="Quận10" id="2" weight="1.0" />
+      <edge source="Quận1" target="Quận3" id="3" weight="1.0" />
+      <edge source="Quận1" target="Quận4" id="4" weight="1.0" />
+      <edge source="Quận1" target="Quận5" id="5" weight="1.0" />
+      <edge source="Quận1" target="Thủ Đức" id="6" weight="1.0" />
+      <edge source="Quận4" target="Quận5" id="7" weight="1.0" />
+      <edge source="Quận4" target="Quận7" id="8" weight="1.0" />
+      <edge source="Quận4" target="Quận8" id="9" weight="1.0" />
+      <edge source="Quận4" target="Thủ Đức" id="10" weight="1.0" />
+      <edge source="Quận7" target="BìnhChánh" id="11" weight="1.0" />
+      <edge source="Quận7" target="NhàBè" id="12" weight="1.0" />
+      <edge source="Quận7" target="Quận8" id="13" weight="1.0" />
+      <edge source="Quận7" target="Thủ Đức" id="14" weight="1.0" />
+      <edge source="PhúNhuận" target="BìnhThạnh" id="15" weight="1.0" />
+      <edge source="PhúNhuận" target="GòVấp" id="16" weight="1.0" />
+      <edge source="PhúNhuận" target="Quận3" id="17" weight="1.0" />
+      <edge source="PhúNhuận" target="TânBình" id="18" weight="1.0" />
+      <edge source="Quận12" target="BìnhTân" id="19" weight="1.0" />
+      <edge source="Quận12" target="BìnhThạnh" id="20" weight="1.0" />
+      <edge source="Quận12" target="GòVấp" id="21" weight="1.0" />
+      <edge source="Quận12" target="HócMôn" id="22" weight="1.0" />
+      <edge source="Quận12" target="TânBình" id="23" weight="1.0" />
+      <edge source="Quận12" target="TânPhú" id="24" weight="1.0" />
+      <edge source="Quận12" target="Thủ Đức" id="25" weight="1.0" />
+      <edge source="TânBình" target="GòVấp" id="26" weight="1.0" />
+      <edge source="TânBình" target="Quận10" id="27" weight="1.0" />
+      <edge source="TânBình" target="Quận11" id="28" weight="1.0" />
+      <edge source="TânBình" target="Quận3" id="29" weight="1.0" />
+      <edge source="TânBình" target="TânPhú" id="30" weight="1.0" />
+      <edge source="Quận5" target="Quận10" id="31" weight="1.0" />
+      <edge source="Quận5" target="Quận11" id="32" weight="1.0" />
+      <edge source="Quận5" target="Quận3" id="33" weight="1.0" />
+      <edge source="Quận5" target="Quận6" id="34" weight="1.0" />
+      <edge source="Quận5" target="Quận8" id="35" weight="1.0" />
+      <edge source="GòVấp" target="BìnhThạnh" id="36" weight="1.0" />
+      <edge source="HócMôn" target="BìnhChánh" id="37" weight="1.0" />
+      <edge source="HócMôn" target="BìnhTân" id="38" weight="1.0" />
+      <edge source="HócMôn" target="CủChi" id="39" weight="1.0" />
+      <edge source="NhàBè" target="BìnhChánh" id="40" weight="1.0" />
+      <edge source="NhàBè" target="CầnGiờ" id="41" weight="1.0" />
+      <edge source="Quận11" target="Quận10" id="42" weight="1.0" />
+      <edge source="Quận11" target="Quận6" id="43" weight="1.0" />
+      <edge source="Quận11" target="TânPhú" id="44" weight="1.0" />
+      <edge source="Quận6" target="BìnhTân" id="45" weight="1.0" />
+      <edge source="Quận6" target="Quận8" id="46" weight="1.0" />
+      <edge source="Quận6" target="TânPhú" id="47" weight="1.0" />
+      <edge source="Quận10" target="Quận3" id="48" weight="1.0" />
+      <edge source="BìnhTân" target="BìnhChánh" id="49" weight="1.0" />
+      <edge source="BìnhTân" target="Quận8" id="50" weight="1.0" />
+      <edge source="BìnhTân" target="TânPhú" id="51" weight="1.0" />
+      <edge source="Quận8" target="BìnhChánh" id="52" weight="1.0" />
+      <edge source="BìnhThạnh" target="Thủ Đức" id="53" weight="1.0" />
+    </edges>
+  </graph>
+</gexf>
