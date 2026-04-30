@@ -1,13 +1,4 @@
-SOURCE CODE PYTHON CÓ THỂ TÁI DÙNG
-
-- data_loader.py - Hàm đọc, làm sạch dữ liệu
-
-- graph_builder.py - Tạo đồ thị từ dữ liệu địa lý
-
-- graph_analysis.py - Centrality, clustering, metrics
-
-- epidemic_model.py - SIR model simulation
-
-- visualizer.py - Folium map, Pyvis graph
-
-- utils.py - Helper functions
+- python src/graph/build_adjacency.py
+- python src/grapg/build_traffic.py
+- python src/data/generate_dengue_data.py
+- python src/data/merge_filter_HCM.py

@@ -5,6 +5,22 @@ import os
 
 
 def remove_accents(text):
+    """
+    Loại bỏ dấu tiếng Việt và chuẩn hóa chuỗi văn bản.
+
+    Hàm này sử dụng chuẩn NFKD để tách các ký tự dấu ra khỏi ký tự gốc, sau đó loại bỏ 
+    các ký tự kết hợp (combining characters) để trả về chuỗi không dấu.
+
+    Parameters
+    ----------
+    text : str
+        Chuỗi văn bản tiếng Việt cần xử lý.
+
+    Returns
+    -------
+    str
+        Chuỗi văn bản đã được loại bỏ dấu.
+    """
     if text is None:
         return ""
     text = str(text)
@@ -13,6 +29,26 @@ def remove_accents(text):
 
 
 def filter_and_merge_hcm():
+    """
+    Lọc dữ liệu hành chính TP.HCM từ file GADM và thực hiện gộp (merge) các quận cũ thành TP. Thủ Đức.
+
+    Quy trình xử lý bao gồm:
+    1. Tải dữ liệu GeoJSON từ GADM mức độ 2 (huyện/quận).
+    2. Lọc riêng các đơn vị hành chính thuộc TP. Hồ Chí Minh.
+    3. Nhận diện các đơn vị hành chính cũ gồm Quận 2, Quận 9 và Quận Thủ Đức.
+    4. Sử dụng phương pháp dissolve để hợp nhất hình học (geometry) của 3 đơn vị này thành TP. Thủ Đức.
+    5. Lưu kết quả cuối cùng (gồm 22 đơn vị hành chính mới) dưới dạng GeoJSON.
+
+    Notes
+    -----
+    Số lượng quận/huyện sau khi gộp đúng chuẩn hiện nay phải là 22 (tương ứng với 21 dòng trong 
+    GeoJSON nếu tính TP. Thủ Đức là một đơn vị và các quận/huyện còn lại).
+
+    Raises
+    ------
+    FileNotFoundError
+        Nếu không tìm thấy tệp dữ liệu nguồn tại `data/raw/gadm41_VNM_2.json`.
+    """
     # 1. Load
     gdf = gpd.read_file("data/raw/gadm41_VNM_2.json")
 

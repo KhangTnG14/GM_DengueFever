@@ -5,13 +5,61 @@ import numpy as np
 
 def build_graph(adj_matrix_path, traffic_path=None, alpha=0.5):
     """
-    Xây dựng đồ thị NetworkX từ ma trận lân cận và giao thông.
+    Xây dựng đồ thị NetworkX từ ma trận lân cận (adjacency matrix)
+    và dữ liệu mật độ giao thông giữa các quận.
 
-    Công thức: weight = (alpha × 1.0) + ((1 - alpha) × traffic_index)
-    
-    alpha = 0.9 → coi trọng địa lý (Thủ Đức rìa đô thị → betweenness thấp)
-    alpha = 0.5 → cân bằng cả hai    (mặc định khuyến nghị)
-    alpha = 0.1 → coi trọng giao thông (Thủ Đức là hub → betweenness cao)
+    Mỗi node đại diện cho một quận/huyện.
+    Một edge được tạo khi hai quận có biên giới chung (adjacency = 1).
+
+    Trọng số cạnh (edge weight) được tính theo công thức:
+        weight = (alpha × 1.0) + ((1 - alpha) × traffic_index)
+
+    Trong đó:
+        - Thành phần 1.0 đại diện cho kết nối địa lý (có chung biên giới)
+        - traffic_index đại diện cho cường độ di chuyển giữa hai quận
+        - alpha ∈ [0, 1] điều chỉnh mức độ ưu tiên:
+            + alpha → 1.0: ưu tiên địa lý
+            + alpha → 0.0: ưu tiên giao thông
+            + alpha = 0.5: cân bằng (khuyến nghị)
+
+    Parameters
+    ----------
+    adj_matrix_path : str
+        Đường dẫn tới file CSV ma trận lân cận (22×22).
+        Giá trị = 1 nếu hai quận tiếp giáp, ngược lại = 0.
+
+    traffic_path : str, optional (default=None)
+        Đường dẫn tới file CSV ma trận giao thông (traffic index).
+        Nếu None, trọng số cạnh chỉ dựa trên adjacency.
+
+    alpha : float, optional (default=0.5)
+        Hệ số kết hợp giữa adjacency và traffic_index.
+        Phải nằm trong khoảng [0, 1].
+
+    Returns
+    -------
+    G : networkx.Graph
+        Đồ thị vô hướng với:
+        - Nodes: tên quận
+        - Edges: các cặp quận tiếp giáp
+        - Edge attribute:
+            + weight (float): trọng số cạnh
+
+    Notes
+    -----
+    - Hàm tự động loại bỏ cạnh trùng (u, v) và (v, u).
+    - Nếu traffic_index bị thiếu hoặc ≤ 0 → mặc định = 0.
+    - Tên quận được strip() để tránh lỗi mismatch.
+
+    Example
+    -------
+    >>> G = build_graph(
+    ...     adj_matrix_path="data/processed/adjacency_matrix.csv",
+    ...     traffic_path="data/raw/traffic_index.csv",
+    ...     alpha=0.5
+    ... )
+    >>> G.number_of_nodes()
+    22
     """
 
     # 1. Load adjacency matrix

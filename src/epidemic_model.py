@@ -22,6 +22,14 @@ def sir_simulation(G, beta, gamma, seed_node, steps=20):
         history   : list of dict — trạng thái S/I/R từng node qua từng bước
         sir_curve : pd.DataFrame — tổng S, I, R toàn thành phố theo thời gian
     """
+    if G.number_of_nodes() == 0:
+        raise ValueError("Đồ thị rỗng — không có node nào.")
+    if seed_node not in G.nodes():
+        raise KeyError(f"seed_node '{seed_node}' không tồn tại trong đồ thị. "
+                       f"Các node hiện có: {list(G.nodes())}")
+    if not (0 < beta < 1) or not (0 < gamma < 1):
+        raise ValueError(f"beta và gamma phải trong khoảng (0, 1). "
+                         f"Nhận được beta={beta}, gamma={gamma}")
     # Khởi tạo trạng thái: tất cả Susceptible, trừ seed_node = Infected
     states = {node: "S" for node in G.nodes()}
     states[seed_node] = "I"
@@ -74,6 +82,13 @@ def apply_intervention(G, top_nodes, reduction=0.5):
     Returns:
         G_intervened : nx.Graph — đồ thị đã can thiệp (bản copy)
     """
+    if not (0 < reduction < 1):
+        raise ValueError(f"reduction phải trong (0, 1), nhận được: {reduction}")
+
+    missing = [n for n in top_nodes if n not in G.nodes()]
+    if missing:
+        print(f"Các node không tồn tại trong đồ thị: {missing}")
+    
     G_intervened = deepcopy(G)
     for node in top_nodes:
         for neighbor in G_intervened.neighbors(node):

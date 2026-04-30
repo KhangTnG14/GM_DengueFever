@@ -5,7 +5,7 @@ import os
 import json
 
 def load_and_merge_data():
-    """Loads all necessary datasets and merges them based on standardized district names."""
+    """Tải tất cả các tập dữ liệu cần thiết và hợp nhất (merge) dựa trên tên quận/huyện đã được chuẩn hóa."""
     # 1. Load cases
     cases_df = pd.read_csv('data/raw/dengue_cases_by_district_2022_2024.csv')
     cases_total = cases_df.groupby('district_name')['cases'].sum().reset_index()
@@ -41,9 +41,11 @@ def load_and_merge_data():
     return gdf, df
 
 def get_centroids(gdf):
-    """Calculates representative points for each district polygon to use for edge rendering.
-    Using representative_point() instead of centroid ensures the point falls inside the polygon,
-    which is important for concave districts like Bình Chánh."""
+    """
+    Tính toán các điểm đại diện (representative points) cho mỗi đa giác (polygon) quận/huyện để vẽ các cạnh (edges).
+    Sử dụng representative_point() thay vì centroid giúp đảm bảo điểm nằm bên trong đa giác,
+    điều này quan trọng đối với các quận có hình dạng lõm như Bình Chánh.
+    """
     # Reproject to a projected CRS (UTM Zone 48N for HCM) to calculate accurate points
     gdf_proj = gdf.to_crs('EPSG:32648')
     centroids = gdf_proj.representative_point().to_crs('EPSG:4326')
@@ -55,7 +57,7 @@ def get_centroids(gdf):
     return centroid_dict
 
 def draw_edges(m, centroid_dict):
-    """Draws network edges between district centroids based on graph_edges.csv."""
+    """Vẽ các cạnh mạng lưới (network edges) giữa các tâm điểm quận/huyện dựa trên tệp graph_edges.csv."""
     edges_df = pd.read_csv('data/processed/graph_edges.csv')
     edges_group = folium.FeatureGroup(name='Mạng lưới lây nhiễm (Edges)', show=True)
     
@@ -83,7 +85,7 @@ def draw_edges(m, centroid_dict):
     edges_group.add_to(m)
 
 def create_choropleth_map():
-    """Creates the choropleth map for total cases and cases per 100k population."""
+    """Tạo bản đồ choropleth cho tổng số ca bệnh và tỉ lệ ca bệnh trên 100k dân."""
     gdf, df = load_and_merge_data()
     centroid_dict = get_centroids(gdf)
 
@@ -148,7 +150,7 @@ def create_choropleth_map():
     print(f"Đã lưu bản đồ ca bệnh tại: {output_path}")
 
 def create_cluster_map():
-    """Creates the map visualizing disease clusters (communities) and the network."""
+    """Tạo bản đồ trực quan hóa các cụm bệnh (communities) và mạng lưới liên kết."""
     gdf, df = load_and_merge_data()
     centroid_dict = get_centroids(gdf)
 

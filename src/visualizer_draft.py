@@ -4,6 +4,30 @@ import folium
 import os
 
 def create_draft_map():
+    """
+    Tạo bản đồ choropleth nháp cho tổng số ca nhiễm dengue và lưu thành tệp HTML.
+
+    Hàm này thực hiện tải dữ liệu thô về các ca nhiễm dengue và tệp GeoJSON của các quận/huyện, 
+    tổng hợp số lượng ca bệnh theo từng đơn vị hành chính, chuẩn hóa tên quận/huyện, 
+    và dựng (render) bản đồ folium choropleth. Tệp HTML đầu ra sẽ được lưu tại 
+    `outputs/maps/draft_choropleth.html`.
+
+    Returns
+    -------
+    str
+        Đường dẫn (outputs/maps/draft_choropleth.html) dẫn đến tệp HTML đã lưu.
+
+    Raises
+    ------
+    FileNotFoundError
+        Nếu các tệp dữ liệu nguồn (data/raw/dengue_cases_by_district_2022_2024.csv) bị thiếu.
+
+    Example
+    -------
+    >>> output_path = create_draft_map()
+    >>> output_path.endswith('draft_choropleth.html')
+    True
+    """
     # 1. Tải dữ liệu
     cases_path = "data/raw/dengue_cases_by_district_2022_2024.csv"
     geojson_path = "data/raw/hcmc_districts.geojson"

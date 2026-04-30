@@ -5,6 +5,31 @@ import os
 
 
 def build_traffic():
+    """
+    Xây dựng ma trận chỉ số lưu lượng giao thông (traffic index) chuẩn hóa từ khoảng cách giữa các tâm điểm quận/huyện.
+
+    Hàm này thực hiện đọc tệp `data/raw/hcmc_districts.geojson`, tính toán giá trị lưu lượng 
+    dựa trên nghịch đảo khoảng cách giữa các tâm điểm (centroid-based inverse-distance) cho 
+    tất cả các cặp quận/huyện, sau đó chuẩn hóa chúng về khoảng [0, 1]. Hàm cũng có tùy chọn 
+    che (mask) các cặp không kề nhau bằng cách sử dụng `data/processed/adjacency_matrix.csv`. 
+    Kết quả được lưu tại `data/raw/traffic_index.csv`.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Ma trận chỉ số lưu lượng giao thông đã chuẩn hóa cho các quận/huyện.
+
+    Notes
+    -----
+    Nếu thiếu tệp `data/processed/adjacency_matrix.csv`, hàm vẫn sẽ tính toán ma trận 
+    lưu lượng đầy đủ và lưu lại mà không thực hiện che (masking) theo quan hệ kề.
+
+    Example
+    -------
+    >>> traffic = build_traffic()
+    >>> traffic.loc['Quận1', 'Quận3'] >= 0
+    True
+    """
     gdf = gpd.read_file("data/raw/hcmc_districts.geojson")
     gdf = gdf.to_crs(epsg=3857)
     gdf["centroid"] = gdf.geometry.centroid

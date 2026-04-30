@@ -4,6 +4,30 @@ import os
 
 
 def build_adjacency():
+    """
+    Xây dựng ma trận kề (adjacency matrix) cho các quận/huyện tại TP.HCM từ ranh giới GeoJSON và lưu vào CSV.
+
+    Hàm này thực hiện đọc tệp `data/raw/hcmc_districts.geojson`, tính toán quan hệ kề nhau bằng 
+    cách kiểm tra xem các đa giác (polygon) quận/huyện có tiếp xúc hoặc giao nhau hay không 
+    (sau khi áp dụng một vùng đệm nhỏ - buffer), sau đó lưu ma trận kề đối xứng thu được tại 
+    `data/processed/adjacency_matrix.csv`.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Ma trận kề nhị phân của các quận/huyện với các giá trị 0/1.
+
+    Raises
+    ------
+    FileNotFoundError
+        Nếu thiếu tệp `data/raw/hcmc_districts.geojson`.
+
+    Example
+    -------
+    >>> adj = build_adjacency()
+    >>> adj.loc['Quận1', 'Quận3']
+    1
+    """
     gdf = gpd.read_file("data/raw/hcmc_districts.geojson")
 
     if gdf.crs is None:
