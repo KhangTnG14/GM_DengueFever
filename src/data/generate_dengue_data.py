@@ -30,6 +30,23 @@ DISTRICTS = [
 
 # Hệ số mùa vụ theo tuần — đỉnh tuần 28-42 (tháng 7-10, mùa mưa TP.HCM)
 def seasonal_factor(week: int) -> float:
+    """
+    Tính toán hệ số mùa vụ (seasonal factor) dựa trên số tuần trong năm.
+
+    Hàm này sử dụng hàm Gaussian (đường cong chuông) để mô phỏng sự biến thiên của số ca bệnh,
+    với đỉnh dịch (peak) rơi vào khoảng tuần thứ 35, tương ứng với giai đoạn cao điểm mùa mưa 
+    tại TP.HCM.
+
+    Parameters
+    ----------
+    week : int
+        Số thứ tự tuần trong năm (từ 1 đến 52).
+
+    Returns
+    -------
+    float
+        Hệ số nhân mùa vụ. Giá trị cao hơn 1.0 biểu thị giai đoạn cao điểm dịch.
+    """
     # Dùng sin lệch pha để đỉnh rơi vào giữa năm (tuần ~35)
     peak_week = 35
     return 1.0 + 0.85 * np.exp(-0.5 * ((week - peak_week) / 10) ** 2)
@@ -39,9 +56,49 @@ YEAR_FACTOR = {2022: 0.75, 2023: 1.00, 2024: 0.85}
 
 def week_to_month(week: int) -> int:
     """Chuyển số tuần sang tháng chính xác (ISO week approximation)."""
+    """
+    Chuyển đổi số thứ tự tuần sang tháng tương ứng (xấp xỉ theo tiêu chuẩn ISO week).
+
+    Hàm này thực hiện ước tính nhanh giá trị tháng dựa trên phân bổ đều 52 tuần vào 12 tháng,
+    phục vụ cho việc gán nhãn thời gian trong tập dữ liệu.
+
+    Parameters
+    ----------
+    week : int
+        Số thứ tự tuần cần chuyển đổi.
+
+    Returns
+    -------
+    int
+        Giá trị tháng tương ứng (từ 1 đến 12).
+    """
     return min(int((week - 1) / 52 * 12) + 1, 12)
 
 def generate_data():
+    """
+    Tạo các bản ghi dữ liệu giả lập về ca bệnh dengue hàng tuần cho các quận/huyện tại TP.HCM và lưu vào tệp CSV.
+
+    Hàm này tạo ra các bản ghi hàng tuần từ năm 2022-2024 cho 22 quận/huyện bằng cách sử dụng 
+    seasonal factor (yếu tố mùa vụ), year factor (yếu tố năm) và nhiễu Poisson (Poisson noise), 
+    sau đó ghi kết quả vào tệp `data/raw/dengue_cases_by_district_2022_2024.csv`.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Tập dữ liệu đã tạo bao gồm các cột:
+        district_id, district_name, year, month, week, cases.
+
+    Raises
+    ------
+    OSError
+        Nếu không thể tạo thư mục đầu ra mục tiêu.
+
+    Example
+    -------
+    >>> df = generate_data()
+    >>> df.columns.tolist()
+    ['district_id', 'district_name', 'year', 'month', 'week', 'cases']
+    """
     np.random.seed(42)
     records = []
 

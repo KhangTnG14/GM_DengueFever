@@ -1,8 +1,8 @@
-"""Community detection utilities for dengue district graph analysis.
+"""Tiện ích phát hiện cộng đồng (Community detection) cho phân tích đồ thị số ca nhiễm dengue theo quận/huyện.
 
-This module supports two approaches:
-1) Louvain community detection with tunable resolution and modularity score.
-2) Spectral clustering on the graph adjacency matrix with silhouette score.
+Module này hỗ trợ hai phương pháp tiếp cận:
+1) Phát hiện cộng đồng Louvain (Louvain community detection) với khả năng điều chỉnh resolution và modularity score.
+2) Phân cụm phổ (Spectral clustering) trên ma trận kề (adjacency matrix) của đồ thị với silhouette score.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ from sklearn.metrics import silhouette_score
 
 @dataclass
 class LouvainResult:
-    """Container for a Louvain run."""
+    """Lớp lưu trữ kết quả của một lượt chạy thuật toán Louvain."""
 
     resolution: float
     modularity_q: float
@@ -29,7 +29,7 @@ class LouvainResult:
 
 @dataclass
 class SpectralResult:
-    """Container for a Spectral Clustering run."""
+    """Lớp lưu trữ kết quả của một lượt chạy thuật toán Spectral Clustering."""
 
     n_clusters: int
     silhouette: float
@@ -39,12 +39,13 @@ class SpectralResult:
 def load_graph_from_csv(
     nodes_path: str, edges_path: str, node_id_col: str = "district"
 ) -> nx.Graph:
-    """Load an undirected weighted graph from nodes/edges CSV files.
+    """
+    Tải một đồ thị vô hướng có trọng số (undirected weighted graph) từ các tệp CSV chứa nodes và edges.
 
-    Expected edge columns:
-    - source
-    - target
-    - weight (optional, defaults to 1.0 if missing)
+    Các cột dự kiến trong tệp cạnh (edge):
+    - source: Nguồn
+    - target: Đích
+    - weight: Trọng số (tùy chọn, mặc định là 1.0 nếu thiếu)
     """
     nodes_df = pd.read_csv(nodes_path)
     edges_df = pd.read_csv(edges_path)
@@ -78,7 +79,7 @@ def load_graph_from_csv(
 def run_louvain_grid(
     graph: nx.Graph, resolutions: Iterable[float] = (0.5, 1.0, 1.5), seed: int = 42
 ) -> List[LouvainResult]:
-    """Run Louvain for multiple resolutions and compute modularity Q."""
+    """Chạy thuật toán Louvain với nhiều giá trị resolution khác nhau và tính modularity Q."""
     results: List[LouvainResult] = []
     for resolution in resolutions:
         labels = community_louvain.best_partition(
@@ -94,7 +95,7 @@ def run_louvain_grid(
 def run_spectral_grid(
     graph: nx.Graph, n_clusters_list: Iterable[int] = (3, 4, 5), seed: int = 42
 ) -> List[SpectralResult]:
-    """Run Spectral Clustering for several k values and compute silhouette score."""
+    """Chạy Spectral Clustering cho một danh sách các giá trị k (n_clusters) và tính silhouette score."""
     nodes = sorted(graph.nodes())
     adjacency = nx.to_numpy_array(graph, nodelist=nodes, weight="weight")
 
@@ -123,19 +124,19 @@ def run_spectral_grid(
 
 
 def pick_best_louvain(results: List[LouvainResult]) -> LouvainResult:
-    """Pick Louvain result with maximum modularity."""
+    """Chọn kết quả Louvain có modularity cao nhất."""
     return max(results, key=lambda r: r.modularity_q)
 
 
 def pick_best_spectral(results: List[SpectralResult]) -> SpectralResult:
-    """Pick Spectral result with maximum silhouette score."""
+    """Chọn kết quả Spectral Clustering có silhouette score cao nhất."""
     return max(results, key=lambda r: r.silhouette)
 
 
 def compare_partitions(
     louvain_labels: Dict[str, int], spectral_labels: Dict[str, int]
 ) -> pd.DataFrame:
-    """Build district-level comparison table of Louvain vs Spectral labels."""
+    """Xây dựng bảng so sánh cấp độ quận/huyện giữa nhãn của Louvain và Spectral."""
     common_nodes = sorted(set(louvain_labels).intersection(set(spectral_labels)))
     return pd.DataFrame(
         {
@@ -152,7 +153,7 @@ def export_community_labels(
     louvain_resolution: float,
     spectral_k: int,
 ) -> None:
-    """Save final community label file for downstream reporting."""
+    """Lưu tệp nhãn cộng đồng cuối cùng để phục vụ cho các báo cáo sau này."""
     df = comparison_df.copy()
     df["louvain_resolution"] = louvain_resolution
     df["spectral_k"] = spectral_k
@@ -164,7 +165,7 @@ def export_metric_summary(
     louvain_results: List[LouvainResult],
     spectral_results: List[SpectralResult],
 ) -> pd.DataFrame:
-    """Create and save metric summary table for method comparison."""
+    """Tạo và lưu bảng tóm tắt các chỉ số (metrics) để so sánh các phương pháp."""
     louvain_df = pd.DataFrame(
         [
             {"method": "louvain", "setting": r.resolution, "score": r.modularity_q}

@@ -14,6 +14,9 @@ def compute_degree_centrality(G):
     Degree centrality: tỉ lệ số cạnh kết nối / (n-1).
     Quận có degree cao = nhiều quận láng giềng trực tiếp.
     """
+    if G.number_of_nodes() == 0:
+        raise ValueError("Đồ thị rỗng — không có node nào.")
+    
     return nx.degree_centrality(G)
 
 
@@ -25,6 +28,12 @@ def compute_betweenness_centrality(G):
     Chú ý: NetworkX betweenness dùng weight là DISTANCE, nên cần invert.
     """
     # Tạo graph với inverted weight để betweenness tính đúng
+
+    if G.number_of_nodes() == 0:
+        raise ValueError("Đồ thị rỗng — không có node nào.")
+    if G.number_of_edges() == 0:
+        return {node: 0.0 for node in G.nodes()}
+
     G_inv = G.copy()
     for u, v, data in G_inv.edges(data=True):
         w = data.get("weight", 1.0)
@@ -39,6 +48,12 @@ def compute_closeness_centrality(G):
     Quận có closeness cao = dịch lan nhanh ra toàn thành phố nếu bùng phát ở đây.
     Dùng inverted weight làm distance.
     """
+
+    if G.number_of_nodes() == 0:
+        raise ValueError("Đồ thị rỗng — không có node nào.")
+    if G.number_of_edges() == 0:
+        return {node: 0.0 for node in G.nodes()}
+
     G_inv = G.copy()
     for u, v, data in G_inv.edges(data=True):
         w = data.get("weight", 1.0)
@@ -49,19 +64,66 @@ def compute_closeness_centrality(G):
 
 def compute_pagerank(G, alpha=0.85):
     """
-    PageRank: tầm quan trọng của quận dựa trên tầm quan trọng của quận láng giềng.
-    Quận được nhiều quận "mạnh" kết nối → PageRank cao.
-    alpha=0.85 là giá trị chuẩn (damping factor).
+    Tính PageRank cho tất cả node trong đồ thị.
+
+    Đánh giá tầm quan trọng của quận dựa trên tầm quan trọng
+    của các quận láng giềng. Quận được nhiều quận "mạnh" kết nối
+    → PageRank cao → nguy cơ nhận dịch từ nhiều nguồn đồng thời.
+
+    Parameters
+    ----------
+    G     : nx.Graph
+        Đồ thị NetworkX có trọng số.
+    alpha : float, optional
+        Damping factor (mặc định 0.85 — giá trị chuẩn).
+
+    Returns
+    -------
+    dict
+        {district_name: pagerank_score}
+
+    Example
+    -------
+    >>> pr = compute_pagerank(G)
+    >>> pr["Quận 10"]
+    0.064
     """
+    if G.number_of_nodes() == 0:
+        raise ValueError("Đồ thị rỗng — không có node nào.")
+    if not (0 < alpha < 1):
+        raise ValueError(f"alpha phải trong khoảng (0, 1), nhận được: {alpha}")
+
     return nx.pagerank(G, alpha=alpha, weight="weight")
 
 
-# =========================
 # TOP N
-# =========================
 
 def get_top_districts(centrality_dict, n=5):
-    """Trả về top N quận có centrality cao nhất."""
+    """
+    Lấy top N quận có centrality score cao nhất.
+
+    Parameters
+    ----------
+    centrality_dict : dict
+        Output từ các hàm compute_*_centrality.
+    n : int
+        Số quận muốn lấy (mặc định 5).
+
+    Returns
+    -------
+    list of tuple
+        [(district_name, score), ...] sắp xếp giảm dần.
+
+    Example
+    -------
+    >>> top5 = get_top_districts(betweenness, n=5)
+    >>> top5[0]
+    ('Quận 1', 0.224)
+    """
+    if not centrality_dict:
+        raise ValueError("centrality_dict rỗng.")
+    if n <= 0:
+        raise ValueError(f"n phải > 0, nhận được: {n}")
     return sorted(centrality_dict.items(), key=lambda x: x[1], reverse=True)[:n]
 
 
@@ -71,8 +133,22 @@ def get_top_districts(centrality_dict, n=5):
 
 def compute_all_centrality(G):
     """
-    Tính toàn bộ 4 centrality metrics.
-    Trả về dict để notebook có thể dùng linh hoạt.
+    Tính toàn bộ 4 centrality metrics trong một lần gọi.
+
+    Parameters
+    ----------
+    G : nx.Graph
+        Đồ thị NetworkX có trọng số.
+
+    Returns
+    -------
+    dict
+        {
+            "degree":      {node: score},
+            "betweenness": {node: score},
+            "closeness":   {node: score},
+            "pagerank":    {node: score},
+        }
     """
     return {
         "degree":       compute_degree_centrality(G),
@@ -83,7 +159,22 @@ def compute_all_centrality(G):
 
 
 def build_centrality_df(G, centrality_dict):
-    """Tạo DataFrame từ dict centrality, sắp xếp theo betweenness."""
+    """
+    Tạo DataFrame tổng hợp từ dict centrality.
+
+    Parameters
+    ----------
+    G                : nx.Graph
+        Đồ thị gốc (để lấy danh sách nodes).
+    centrality_dict  : dict
+        Output từ compute_all_centrality().
+
+    Returns
+    -------
+    pd.DataFrame
+        Columns: district, degree, betweenness, closeness, pagerank.
+        Sắp xếp theo betweenness giảm dần.
+    """
     nodes = list(G.nodes())
     df = pd.DataFrame({
         "district":    nodes,
@@ -96,23 +187,53 @@ def build_centrality_df(G, centrality_dict):
 
 
 def save_centrality(df, output_path):
-    """Lưu CSV với encoding UTF-8 BOM để mở đúng tiếng Việt trên Excel."""
+    """
+    Lưu DataFrame centrality ra file CSV.
+
+    Parameters
+    ----------
+    df          : pd.DataFrame
+        Output từ build_centrality_df().
+    output_path : str
+        Đường dẫn file CSV đầu ra.
+
+    Returns
+    -------
+    None
+    """
     df.to_csv(output_path, index=False, encoding="utf-8-sig")
     print(f"Saved: {output_path}")
 
 
-# =========================
-# DEBUG
-# =========================
 
-def print_graph_info(G):
-    print("===== GRAPH INFO =====")
-    print(f"Nodes  : {G.number_of_nodes()}")
-    print(f"Edges  : {G.number_of_edges()}")
-    print(f"Connected: {nx.is_connected(G)}")
+# DEBUG
+def print_graph_info(G: nx.Graph) -> None:
+    """
+    In thông tin tổng quan về đồ thị ra console.
+
+    Parameters
+    ----------
+    G : nx.Graph
+        Đồ thị cần kiểm tra.
+    """
+    if G.number_of_nodes() == 0:
+        print("Đồ thị rỗng.")
+        return
+
     degrees = dict(G.degree())
-    print(f"Degree — max: {max(degrees.values())}, min: {min(degrees.values())}, "
+    weights = [d["weight"] for _, _, d in G.edges(data=True) if "weight" in d]
+
+    print("===== GRAPH INFO =====")
+    print(f"Nodes    : {G.number_of_nodes()}")
+    print(f"Edges    : {G.number_of_edges()}")
+    print(f"Connected: {nx.is_connected(G)}")
+    print(f"Density  : {nx.density(G):.4f}")
+    print(f"Degree   — max: {max(degrees.values())}, "
+          f"min: {min(degrees.values())}, "
           f"avg: {np.mean(list(degrees.values())):.2f}")
-    weights = [d["weight"] for _, _, d in G.edges(data=True)]
-    print(f"Weight — max: {max(weights):.3f}, min: {min(weights):.3f}, "
-          f"avg: {np.mean(weights):.3f}")
+    if weights:
+        print(f"Weight   — max: {max(weights):.4f}, "
+              f"min: {min(weights):.4f}, "
+              f"avg: {np.mean(weights):.4f}")
+    else:
+        print("Weight   — không có trọng số trên cạnh")
